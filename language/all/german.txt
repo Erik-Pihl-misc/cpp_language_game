@@ -1,0 +1,308 @@
+I have no car, but I own five bicycles.
+Ich habe kein Auto, aber ich besitze fünf Fahrräder.
+
+I'm an electrical engineer.
+Ich bin Elektroingenieur.
+
+I work as a software developer.
+Ich arbeite als Softwareentwickler.
+
+I also work part time as a teacher for electrical engineering students.
+Ausserdem arbeite ich Teilzeit als Lehrer für Elektrotechnik-Studenten. 
+
+Leave me alone!
+Lass mich allein!
+
+What do you expect from me?
+Was erwartest du von mir?
+ 
+Nice to meet you!
+Nett dich kennenzulernen!
+
+I speak English fluently.
+Ich spreche fliessend Englisch.
+
+My cat's fur is black.
+Das Fell meiner Katze ist schwarz.
+
+I like strength training and cycling.
+Ich mag Krafttraining und Radfahren.
+
+What are you doing right now?
+Was machst du gerade?
+
+I bicycle on average circa one hour each day.
+Ich fahre durchschnittlich etwa eine Stunde pro Tag Fahrrad.
+
+I strength train on average five to six times a week.
+Ich trainiere durchschnittlich fünf bis sechs Mal pro Woche Kraft.
+
+I go to work by bike.
+Ich fahre mit dem Fahrrad zur Arbeit.
+
+I've been programming for ten years.
+Ich programmiere seit zehn Jahren.
+
+I like to program embedded systems, particulary in C++.
+Ich programmiere gern eingebettete Systeme, insbesondere in C++.
+
+My favourite programming language is C++, followed by C.
+Meine Lieblingsprogrammiersprache ist C++, gefolgt von C.
+
+Both of my cats have black fur.
+Meine beiden Katzen haben schwarzes Fell.
+
+I teach embedded programming, machine learning, digital hardware design and analog electronics.
+Ich unterrichte eingebettete Programmierung, maschinelles Lernen, digitales Hardwaredesign und analoge Elektronik.
+
+My dog's tail is quite short.
+Der Schwanz meines Hundes ist ziemlich kurz.
+
+My rabbit's eyes are grey.
+Die Augen meines Kaninchens sind grau.
+
+I'm an electrical engineer and I work primarily as a software developer.
+Ich bin Elektroingenieur und arbeite hauptsächlich als Softwareentwickler.
+
+I speak four languages; Swedish, English, German and Portuguese.
+Ich spreche vier Sprachen; Schwedisch, Englisch, Deutsch und Portugiesisch. 
+
+Swedish is my native tongue and English is my second language.
+Schwedisch ist meine Muttersprache und Englisch ist meine Zweitsprache.
+
+Rocka Rolla is the first album by Judas Priest and was released in September 1974.
+Rocka Rolla ist das erste Album von Judas Priest und wurde im September 1974 veröffentlicht.
+
+The producer was Rodger Bain and the recordings took place in June and July 1974.
+Der Produzent war Rodger Bain und die Aufnahmen erfolgten im Juni und Juli 1974. 
+
+All songs are written by Judas Priest. However original singer Al Atkins co-wrote some of the tracks.
+Alle Lieder wurden von Judas Priest geschrieben. Der ursprüngliche Sänger Al Atkins war jedoch Co-Autor einiger Tracks.
+
+I can feel the heat.
+Ich kann die Hitze spüren.
+
+I can feel the cold.
+Ich kann die Kälte spüren.
+
+I feel a craving for chocolate milk.
+Ich verspüre ein Verlangen nach Schokoladenmilch.
+
+This dish is very cheap.
+Dieses Gericht ist sehr günstig.
+
+I haven't thought of that.
+Daran habe ich nicht gedacht.
+
+I don't know about that.
+Darüber weiss ich nichts.
+
+I think that's incorrect.
+Ich denke, das ist falsch.
+
+I believe that's correct.
+Ich glaube, das ist richtig.
+
+I'm engaged. My fiancee's name is Isadora and she comes from Brazil. We're getting married soon.
+Ich bin verlobt. Der Name meiner Verlobten ist Isadora und sie kommt aus Brasilien. Wir werden bald heiraten.
+
+Good luck!
+Gück mal!
+
+Show yourself! (singular)
+Zeig dich!
+
+I like to read books about music, programming and languages.
+Ich lese gern Bücher über Musik, Programmierung und Sprachen.
+
+of that
+daran
+
+about that 
+darüber
+
+They've seen you! Hurry, get out of here! (you in plural)
+Sie haben euch gesehen! Beeil euch, verschwinde von hier!
+
+Come here immediately!
+Komm sofort hierher!
+
+I've learned Portuguese as an adult.
+Ich habe als Erwachsener Portugiesisch gelernt.
+
+already (not surprised)
+bereits 
+
+would 
+würde
+
+as
+als
+
+because/since (at start of sentence)
+da
+
+because/since (not at start of sentence)
+weil
+
+as adult
+als Erwachsener
+
+It will be easy!
+Es wird einfach sein!
+
+Since I already spoke three languages, I figured learning a fourth one would be easy.
+Da ich bereits drei Sprachen sprach, dachte ich, dass es einfach sein würde, eine vierte zu lernen.
+
+still
+immer noch
+
+already (when surprised)
+schon
+
+at all
+überhaupt
+
+really
+wirklich
+
+actually
+eigentlich
+
+in fact/indeed
+tatsächlich
+
+while
+während
+
+although
+obwohl
+
+despite it
+trotzdem
+
+despite
+trotz
+
+even 
+sogar
+
+similar
+ähnlich
+
+same 
+gleich
+
+compare
+vergleichen
+
+I'll show you.
+Ich zeige es dir.
+
+I'm looking at you.
+Ich schaue dich an.
+
+In fact, German has a lot of similarities with Swedish.
+Tatsächlich hat Deutsch viele Ähnlichkeiten mit Schwedisch.
+
+very
+ganz
+
+quite 
+ziemlich
+
+completely
+vollständig
+
+Are you done already?
+Bist du schon fertig?
+
+In fact, German has a lot of similarities with Swedish.
+Tatsächlich hat Deutsch viele Ähnlichkeiten mit Schwedisch.
+
+A similarity, several similarities.
+Eine Ähnlichkeit, mehrere Ähnlichkeiten.
+
+Actually it's not that simple, in fact it's quite difficult.
+Eigentlich ist es nicht so einfach, tatsächlich ist es ziemlich schwierig.
+
+however
+jedoch
+
+if
+ob
+
+for that
+dafür
+
+from where
+woher
+
+the decision
+die Entscheidung
+
+forward
+vorwärts
+
+backward
+rückwärts
+
+nowadays
+heutzutage
+
+now and then
+jetzt und dann
+
+above all
+vor allem
+
+any
+irgend 
+
+anytime/sometime
+irgendwann
+
+anywhere/somewhere
+irgendwo
+
+anyhow/somehow
+irgendwie
+
+anyone/someone
+irgendjemand
+
+care for 
+sorgen
+
+included
+dabei
+
+simultaneously
+gleichzeitig
+
+rather
+sondern
+
+for this reason
+deshalb
+
+assume, assumed
+annehmen, angenohmen
+
+flawless
+einwandfrei
+
+catch, caught
+erwischen, erwischte
+
+the thought
+der Gedanke
+
+in addition
+dazu
+
+several things
+mehrere Dinge
+
+by which
+womit
