@@ -173,13 +173,27 @@ inline void ReadLine(std::string& s, const char* space = "") {
  * 
  * @param file_path
  *        Path to file containing phrase pairs to load the vector with.
- * @param data
+ * @param phrases
  *        Reference to vector storing the loaded phrase pairs.
  * @return
- *        True if at least one phrase pair was loaded, else false.
+ *        The number of loaded phrases.
  ********************************************************************************/
-bool LoadPhrasePairs(const std::string& file_path, 
-                     std::vector<std::pair<std::string, std::string>>& data);
+size_t LoadPhrasePairs(const std::string& file_path, 
+                     std::vector<std::pair<std::string, std::string>>& phrases);
+
+/********************************************************************************
+ * @brief Writes pairs of primary and target language phrases stored to file at 
+ *        specified path.
+ * 
+ * @param file_path
+ *        Destination file path that the phrase pairs are written to.
+ * @param phrases
+ *        Reference to vector storing the phrase pairs to write.
+ * @return
+ *        True if at least one phrase pair was written, else false.
+ ********************************************************************************/
+bool WritePhrasePairsToFile(const std::string& file_path, 
+                            const std::vector<std::pair<std::string, std::string>>& phrases);
 
 /********************************************************************************
  * @brief Reads all non-blank lines of file at specified path and stores them

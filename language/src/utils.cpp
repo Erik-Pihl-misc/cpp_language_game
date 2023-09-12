@@ -24,17 +24,29 @@ constexpr bool ValidCharacter(const char c) {
 
 } /* namespace */
 
-bool LoadPhrasePairs(const std::string& file_path, 
-                     std::vector<std::pair<std::string, std::string>>& data) {
+size_t LoadPhrasePairs(const std::string& file_path, 
+                     std::vector<std::pair<std::string, std::string>>& phrases) {
     std::vector<std::string> retrieved_data{};
     if (RetrieveFromFile(file_path, retrieved_data) && retrieved_data.size() > 1) {
         for (size_t i{}; i < retrieved_data.size(); i += 2) {
             std::pair<std::string, std::string> pair{retrieved_data[i], retrieved_data[i + 1]};
-            data.push_back(pair);
+            phrases.push_back(pair);
         }
-        return data.size() ? true : false;
-    } else {
+    }
+    return phrases.size(); 
+}
+
+bool WritePhrasePairsToFile(const std::string& file_path, 
+                            const std::vector<std::pair<std::string, std::string>>& phrases) {
+    std::ofstream ofstream{file_path, std::ios::out};
+    if (!ofstream && phrases.size() == 0) {
         return false;
+    } else {
+        for (auto& phrase : phrases) {
+            ofstream << phrase.first << "\n";
+            ofstream << phrase.second << "\n\n";
+        }
+        return true;
     }
 }
 

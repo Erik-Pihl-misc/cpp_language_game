@@ -2,11 +2,31 @@
 
 namespace languages {
 
+Dictionary::Dictionary(const std::string& file_path, const bool print_result) { 
+    Load(file_path, print_result); 
+}
+
+Dictionary::Dictionary(const int argc, const char** argv, const bool print_result) { 
+    Load(argc, argv, print_result); 
+}
+
 const std::pair<std::string, std::string>& Dictionary::GetRandomPhrase(void) const {
     return phrases_[utils::GetRandomInt<size_t>(NumPhrases())];
 }
 
-bool Dictionary::Load(const int argc, const char** argv) {
+bool Dictionary::Load(const std::string& file_path, const bool print_success) { 
+    if (utils::LoadPhrasePairs(file_path, phrases_) == 0) {
+        std::cerr << "File \"" << file_path << "\" wasn't found or contains insufficient data!\n\n";
+        return false;
+    } else {
+        if (print_success) {
+            std::cout << "Language data from file \"" << file_path << "\" successfully loaded!\n\n";
+        }
+        return true;  
+    }
+}
+
+bool Dictionary::Load(const int argc, const char** argv, const bool print_success) {
     std::cout << "\n";
     if (argc == 1) {
         std::cerr << "Cannot load dictionary due to missing file path!\n\n";
@@ -15,10 +35,12 @@ bool Dictionary::Load(const int argc, const char** argv) {
     const auto file_path{argv[1]}; 
     Load(file_path);
     if (Empty()) {
-        std::cout << "File \"" << file_path << "\" wasn't found or contains insufficient data!\n\n";
+        std::cerr << "File \"" << file_path << "\" wasn't found or contains insufficient data!\n\n";
         return false;
     } else {
-        std::cout << "Language data from file \"" << file_path << "\" successfully loaded!\n\n";
+        if (print_success) {
+            std::cout << "Language data from file \"" << file_path << "\" successfully loaded!\n\n";
+        }
         return true;
     }
 }
@@ -31,6 +53,33 @@ void Dictionary::TranslateToTarget(const size_t max_num_phrases, const bool prin
 void Dictionary::TranslateToPrimary(const size_t max_num_phrases, const bool print_start_info) {
     reverse_ = true;
     RunGame(max_num_phrases, print_start_info);
+}
+
+bool Dictionary::ClearDuplicatesInFile(const std::string& file_path) {
+    Dictionary source{file_path, false}, copy{};
+    if (source.Empty()) return false;
+    source.GetCopyWithouthDuplicates(copy);
+    const auto num_duplicates{source.NumPhrases() - copy.NumPhrases()};
+    if (num_duplicates) {
+        if (num_duplicates == 1) {
+            std::cout << "Removed one duplicate from file at path \"" << file_path << "\"!\n\n";
+        } else {
+            std::cout << "Removed " << num_duplicates << " duplicates from file at path \"" << file_path << "\"!\n\n";
+        }
+        return utils::WritePhrasePairsToFile(file_path, copy.Phrases());
+    } else {
+        std::cout << "Found no duplicates in file at path \"" << file_path << "\"!\n\n";
+        return true;
+    }
+}
+
+bool Dictionary::ClearDuplicatesInFile(const int argc, const char** argv) {
+    if (argc >= 2) {
+        return ClearDuplicatesInFile(argv[1]);
+    } else {
+        std::cerr << "Cannot clear duplicates! No file path specified!\n\n";
+        return false;
+    }
 }
 
 void Dictionary::RunGame(const size_t max_num_phrases, const bool print_start_info) {
@@ -52,7 +101,6 @@ void Dictionary::RunRound(std::vector<std::pair<std::string, std::string>>& phra
     PrintResults();
     ClearStats();
 }
-
 
 void Dictionary::RunPhrases(std::vector<std::pair<std::string, std::string>>& phrases,
                             const size_t max_num_phrases) {
@@ -220,6 +268,30 @@ bool Dictionary::PlayAgainInReverse(void) {
         } else {
             std::cout << "Invalid input, try again:\n";
         }
+    }
+}
+
+void Dictionary::GetCopyWithouthDuplicates(Dictionary& copy) {
+    for (auto& phrase : phrases_) {
+        copy.AddPhrase(phrase);
+    }
+}
+
+bool Dictionary::PhraseExists(const std::pair<std::string, std::string>& searched_phrase) {
+    for (auto& stored_phrase : phrases_) {
+        if (stored_phrase.first == searched_phrase.first && stored_phrase.second == searched_phrase.second) {
+            return true;
+        }
+    }
+    return false;
+}
+
+bool Dictionary::AddPhrase(const std::pair<std::string, std::string>& new_phrase) {
+    if (PhraseExists(new_phrase)) {
+        return false;
+    } else {
+        phrases_.push_back(new_phrase);
+        return true;
     }
 }
 

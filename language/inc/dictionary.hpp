@@ -25,8 +25,11 @@ class Dictionary {
      * 
      * @param file_path
      *        Path to file containing data to load the dictionary with.
+     * @param print_success
+     *        Indicates if a success message shall be printed in the terminal after
+     *        successful load of the dictionary (default = true).
      ********************************************************************************/
-    Dictionary(const std::string& file_path) { Load(file_path); }
+    Dictionary(const std::string& file_path, const bool print_success = true);
 
     /********************************************************************************
      * @brief Loads dictionary with phrases stored in file at path entered from
@@ -45,8 +48,19 @@ class Dictionary {
      * @param argv
      *        Reference to vector storing all input arguments entered from the 
      *        terminal when running the program.
+     * @param print_success
+     *        Indicates if a success message shall be printed in the terminal after
+     *        successful load of the dictionary (default = true).
      ********************************************************************************/
-    Dictionary(const int argc, const char** argv) { Load(argc, argv); }
+    Dictionary(const int argc, const char** argv, const bool print_success = true);
+
+    /********************************************************************************
+     * @brief Provides all phrases stored in the dictionary.
+     * 
+     * @return
+     *        Reference to vector storing all stored phrases in pairs.
+     ********************************************************************************/
+    const std::vector<std::pair<std::string, std::string>>& Phrases(void) const { return phrases_; }
 
     /********************************************************************************
      * @brief Provides the number of phrases stored in the dictionary.
@@ -54,7 +68,7 @@ class Dictionary {
      * @return
      *        The number of phrases in the dictionary.
      ********************************************************************************/
-    bool NumPhrases(void) const { return phrases_.size(); }
+    size_t NumPhrases(void) const { return phrases_.size(); }
 
     /********************************************************************************
      * @brief Indicates if the dictionary is empty.
@@ -69,12 +83,13 @@ class Dictionary {
      * 
      * @param file_path
      *        Path to file containing data to load the dictionary with.
+     * @param print_success
+     *        Indicates if a success message shall be printed in the terminal after
+     *        successful load of the dictionary (default = true).
      * @return
      *        True if the data was loaded from the file, else false.
      ********************************************************************************/
-    bool Load(const std::string& file_path) { 
-        return utils::LoadPhrasePairs(file_path, phrases_); 
-    }
+    bool Load(const std::string& file_path, const bool print_success = true);
 
     /********************************************************************************
      * @brief Loads dictionary with data stored in file at path entered from
@@ -93,10 +108,13 @@ class Dictionary {
      * @param argv
      *        Reference to vector storing all input arguments entered from the 
      *        terminal when running the program.
+     * @param print_success
+     *        Indicates if a success message shall be printed in the terminal after
+     *        successful load of the dictionary (default = true).
      * @return
      *        True if the data was loaded, else false.
      ********************************************************************************/
-    bool Load(const int argc, const char** argv);
+    bool Load(const int argc, const char** argv, const bool print_success = true);
 
    /********************************************************************************
      * @brief Provides a random phrase stored in the dictionary.
@@ -131,6 +149,39 @@ class Dictionary {
      ********************************************************************************/
     void TranslateToPrimary(const size_t max_num_phrases = std::numeric_limits<size_t>::max(),
                             const bool print_start_info = true);
+
+    /********************************************************************************
+     * @brief Clears potential duplicates in file at specified path.
+     *   
+     * @param file_path
+     *        Path to file containing data to load the dictionary with.
+     * @return
+     *        True if the file was opened and potential duplicates were removed,
+     *        else false.
+     ********************************************************************************/
+    static bool ClearDuplicatesInFile(const std::string& file_path);
+
+    /********************************************************************************
+     * @brief Clears potential duplicates in file at path entered from the terminal.
+     * 
+     * @note  The file path must be entered after the run command, for instance
+     * 
+     *        ./run_game file.txt
+     * 
+     *        to load phrases from "file.txt" when running the program and
+     *        "run_game" is the name of the executable.
+     * 
+     * @param argc
+     *        The number of input arguments entered from the terminal when
+     *        running the program.
+     * @param argv
+     *        Reference to vector storing all input arguments entered from the 
+     *        terminal when running the program.
+     * @return
+     *        True if the file was opened and potential duplicates were removed,
+     *        else false.
+     ********************************************************************************/
+    static bool ClearDuplicatesInFile(const int argc, const char** argv);
 
     /********************************************************************************
      * @brief Provides the maximum number of phrases to translate, either a set
@@ -200,6 +251,9 @@ class Dictionary {
                                          const size_t max_num_phrases);
     static void RemoveAdditionalPhraseInfo(std::string& s);
     static bool PlayAgainInReverse(void);
+    void GetCopyWithouthDuplicates(Dictionary& copy);
+    bool PhraseExists(const std::pair<std::string, std::string>& searched_phrase);
+    bool AddPhrase(const std::pair<std::string, std::string>& new_phrase);
 };
 
 } /* namespace languages */

@@ -5,17 +5,17 @@
  * 
  *        The file path must be entered after the run command, for instance
  * 
- *        ./run_game file.txt
+ *        ./run_game dir/file.txt
  * 
- *        to load phrases from "file.txt" when running the program and
- *        "run_game" is the name of the executable.
+ *        to load phrases from "file.txt" in directory "dir" when running the 
+ *        program and "run_game" is the name of the executable.
  * 
  *        As default, all loaded phrases are translated. Optionally the maximum 
  *        number of phrases to translate can be entered after the file path.
  *        For instance, to translate a maximum of ten phrases loaded from 
  *        "file.txt" when running the program "run_game", type
  * 
- *        ./run_game file.txt 10
+ *        ./run_game dir/file.txt 10
  ********************************************************************************/
 #include <dictionary.hpp>
 
