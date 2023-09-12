@@ -38,9 +38,6 @@ bool Dictionary::Load(const int argc, const char** argv, const bool print_succes
         std::cerr << "File \"" << file_path << "\" wasn't found or contains insufficient data!\n\n";
         return false;
     } else {
-        if (print_success) {
-            std::cout << "Language data from file \"" << file_path << "\" successfully loaded!\n\n";
-        }
         return true;
     }
 }
@@ -159,6 +156,7 @@ void Dictionary::PrintCurrentStatus(void) const {
     std::cout << "Number of guesses:\t\t" << num_guesses_ << "\n";
     std::cout << "Number of correct answers:\t" << NumCorrectAnswers() << "\n";
     std::cout << "Number of incorrect guesses:\t" << num_errors_ << "\n";
+    std::cout << "Number of phrases remaining:\t" << NumPhrases() - NumCorrectAnswers() << "\n";
     std::cout << "--------------------------------------------------------------------------------\n\n";
 }
 
