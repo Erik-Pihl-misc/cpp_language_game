@@ -11,7 +11,7 @@ Dictionary::Dictionary(const int argc, const char** argv, const bool print_resul
 }
 
 const std::pair<std::string, std::string>& Dictionary::GetRandomPhrase(void) const {
-    return phrases_[utils::GetRandomInt<size_t>(NumPhrases())];
+    return phrases_[utils::GetRandomInt<std::size_t>(NumPhrases())];
 }
 
 bool Dictionary::Load(const std::string& file_path, const bool print_success) { 
@@ -35,27 +35,28 @@ bool Dictionary::Load(const int argc, const char** argv, const bool print_succes
     const auto file_path{argv[1]}; 
     Load(file_path);
     if (Empty()) {
-        std::cerr << "File \"" << file_path << "\" wasn't found or contains insufficient data!\n\n";
         return false;
     } else {
         return true;
     }
 }
 
-void Dictionary::TranslateToTarget(const size_t max_num_phrases, const bool print_start_info) {
+void Dictionary::TranslateToTarget(const std::size_t max_num_phrases, const bool print_start_info) {
     reverse_ = false;
-    RunGame(max_num_phrases, print_start_info);
+    max_num_phrases_ = max_num_phrases;
+    RunGame(print_start_info);
 }
 
-void Dictionary::TranslateToPrimary(const size_t max_num_phrases, const bool print_start_info) {
+void Dictionary::TranslateToPrimary(const std::size_t max_num_phrases, const bool print_start_info) {
     reverse_ = true;
-    RunGame(max_num_phrases, print_start_info);
+    max_num_phrases_ = max_num_phrases;
+    RunGame(print_start_info);
 }
 
 bool Dictionary::ClearDuplicatesInFile(const std::string& file_path) {
     Dictionary source{file_path, false}, copy{};
     if (source.Empty()) return false;
-    source.GetCopyWithouthDuplicates(copy);
+    source.GetCopyWithoutDuplicates(copy);
     const auto num_duplicates{source.NumPhrases() - copy.NumPhrases()};
     if (num_duplicates) {
         if (num_duplicates == 1) {
@@ -79,11 +80,11 @@ bool Dictionary::ClearDuplicatesInFile(const int argc, const char** argv) {
     }
 }
 
-void Dictionary::RunGame(const size_t max_num_phrases, const bool print_start_info) {
+void Dictionary::RunGame(const bool print_start_info) {
     std::vector<std::pair<std::string, std::string>> remaining_phrases{phrases_};
-    InitNumberOfPhrasesToRun(remaining_phrases, max_num_phrases);
+    InitNumberOfPhrasesToRun(remaining_phrases);
     auto phrase_backup{remaining_phrases};
-    if (print_start_info) PrintStartInfo(max_num_phrases);
+    if (print_start_info) PrintStartInfo();
     RunRound(remaining_phrases);
     if (PlayAgainInReverse()) {
         reverse_ = !reverse_;
@@ -91,22 +92,21 @@ void Dictionary::RunGame(const size_t max_num_phrases, const bool print_start_in
     }
 }
 
-void Dictionary::RunRound(std::vector<std::pair<std::string, std::string>>& phrases, const size_t max_num_phrases) {
-    while (phrases.size() && (NumCorrectAnswers() < max_num_phrases)) {
-        RunPhrases(phrases, max_num_phrases);
+void Dictionary::RunRound(std::vector<std::pair<std::string, std::string>>& phrases) {
+    while (phrases.size() && (NumCorrectAnswers() < max_num_phrases_)) {
+        RunPhrases(phrases);
     }
     PrintResults();
     ClearStats();
 }
 
-void Dictionary::RunPhrases(std::vector<std::pair<std::string, std::string>>& phrases,
-                            const size_t max_num_phrases) {
+void Dictionary::RunPhrases(std::vector<std::pair<std::string, std::string>>& phrases) {
     std::vector<std::pair<std::string, std::string>> incorrect_phrases{};
     InitIndexVector(phrases.size());
     for (auto& i : index_vector_) {
         PrintCurrentStatus();
         RunNextPhrase(phrases[i], incorrect_phrases);
-        if (NumCorrectAnswers() >= max_num_phrases) return;
+        if (NumCorrectAnswers() >= max_num_phrases_) return;
     }
     phrases = incorrect_phrases;
 }
@@ -142,8 +142,8 @@ void Dictionary::CheckGuess(const std::string& guess,
     num_guesses_++;
 }
 
-void Dictionary::PrintStartInfo(const size_t max_num_phrases) const {
-    const size_t loaded_phrases{utils::Min<size_t>(max_num_phrases, phrases_.size())};
+void Dictionary::PrintStartInfo(void) const {
+    const std::size_t loaded_phrases{utils::Min<std::size_t>(max_num_phrases_, phrases_.size())};
     std::cout << "--------------------------------------------------------------------------------\n";
     std::cout << "Starting translation game!\n";
     std::cout << loaded_phrases << " phrases have been loaded!\n";
@@ -175,23 +175,23 @@ void Dictionary::PrintResults(void) const {
     std::cout << "--------------------------------------------------------------------------------\n\n";
 }
 
-void Dictionary::ResizeIndexVector(const size_t size) {
+void Dictionary::ResizeIndexVector(const std::size_t size) {
     index_vector_.resize(size);
-    for (size_t i{}; i < index_vector_.size(); ++i) {
+    for (std::size_t i{}; i < index_vector_.size(); ++i) {
         index_vector_[i] = i;
     }
 }
 
 void Dictionary::ShuffleIndexVector(void) {
-    for (size_t i{}; i < index_vector_.size(); ++i) {
-        const auto r{utils::GetRandomInt<size_t>(index_vector_.size())};
+    for (std::size_t i{}; i < index_vector_.size(); ++i) {
+        const auto r{utils::GetRandomInt<std::size_t>(index_vector_.size())};
         const auto temp{index_vector_[i]};
         index_vector_[i] = index_vector_[r];
         index_vector_[r] = temp;
     }
 }
 
-void Dictionary::InitIndexVector(const size_t size) {
+void Dictionary::InitIndexVector(const std::size_t size) {
     ResizeIndexVector(size);
     ShuffleIndexVector();
 }
@@ -201,7 +201,7 @@ void Dictionary::AnalyzeError(const std::string& guess, const std::string& answe
         return c != ' ' ? std::string{'"', c, '"'} : 
         upper_case ? std::string{"Blank line"} : std::string{"blank line"};
     };
-    for (size_t i{}; i < answer.size(); ++i) {
+    for (std::size_t i{}; i < answer.size(); ++i) {
         if (i < guess.size()) {
             if (guess[i] != answer[i]) {
                 std::cout << GetOutput(guess[i], true) << " at index " << i 
@@ -226,26 +226,27 @@ bool Dictionary::PerformAnalysis(void) {
         } else if (s[0] == 'N' || s[0] == 'n') {
             return false;
         } else {
-            std::cout << "Invalid input, try again:\n";
+            std::cout << "Invalid input, try again!\n";
         }
     }
 }
 
-void Dictionary::InitNumberOfPhrasesToRun(std::vector<std::pair<std::string, std::string>>& phrases,
-                                          const size_t max_num_phrases) {
-    if (max_num_phrases < phrases.size()) {
-        for (size_t i{}; i < max_num_phrases; ++i) {
-            const auto r{std::rand() % phrases.size()};
-            const auto temp{phrases[i]};
-            phrases[i] = phrases[r];
-            phrases[r] = temp;
-        }
-        phrases.resize(max_num_phrases);
+void Dictionary::InitNumberOfPhrasesToRun(std::vector<std::pair<std::string, std::string>>& phrases) {
+    InitRandomGenerator();
+    const auto num_phrases{max_num_phrases_ < phrases.size() ? max_num_phrases_ : phrases.size()};
+    for (std::size_t i{}; i < num_phrases; ++i) {
+        const auto r{std::rand() % phrases.size()};
+        const auto temp{phrases[i]};
+        phrases[i] = phrases[r];
+        phrases[r] = temp;
+    }
+    if (max_num_phrases_ < phrases.size()) {
+        phrases.resize(max_num_phrases_);
     }
 }
 
 void Dictionary::RemoveAdditionalPhraseInfo(std::string& s) {
-    for (size_t i{}; i < s.size(); ++i) {
+    for (std::size_t i{}; i < s.size(); ++i) {
         if (s[i] == '(') {
             s = s.std::string::substr(0, i);
             utils::RemoveTrailingWhitespaces(s);
@@ -264,12 +265,12 @@ bool Dictionary::PlayAgainInReverse(void) {
         } else if (s[0] == 'N' || s[0] == 'n') {
             return false;
         } else {
-            std::cout << "Invalid input, try again:\n";
+            std::cout << "Invalid input, try again!\n";
         }
     }
 }
 
-void Dictionary::GetCopyWithouthDuplicates(Dictionary& copy) {
+void Dictionary::GetCopyWithoutDuplicates(Dictionary& copy) {
     for (auto& phrase : phrases_) {
         copy.AddPhrase(phrase);
     }
@@ -290,6 +291,14 @@ bool Dictionary::AddPhrase(const std::pair<std::string, std::string>& new_phrase
     } else {
         phrases_.push_back(new_phrase);
         return true;
+    }
+}
+
+void Dictionary::InitRandomGenerator(void) {
+    static bool rand_init{false};
+    if (!rand_init) {
+        std::srand(std::time(nullptr));
+        rand_init = true;
     }
 }
 

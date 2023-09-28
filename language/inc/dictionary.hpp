@@ -5,6 +5,7 @@
 
 #include <utils.hpp>
 #include <limits>
+#include <ctime>
 
 namespace languages {
 
@@ -68,7 +69,8 @@ class Dictionary {
      * @return
      *        The number of phrases in the dictionary.
      ********************************************************************************/
-    size_t NumPhrases(void) const { return phrases_.size(); }
+    std::size_t NumPhrases(void) const { return max_num_phrases_ <= phrases_.size() ?
+                                                max_num_phrases_ : phrases_.size(); }
 
     /********************************************************************************
      * @brief Indicates if the dictionary is empty.
@@ -134,7 +136,7 @@ class Dictionary {
      *        Indicates if starting info is to be printed, e.g. the number of
      *        phrases loaded etc (default = true).
      ********************************************************************************/
-    void TranslateToTarget(const size_t max_num_phrases = std::numeric_limits<size_t>::max(),
+    void TranslateToTarget(const std::size_t max_num_phrases = std::numeric_limits<std::size_t>::max(),
                            const bool print_start_info = true);
 
     /********************************************************************************
@@ -147,7 +149,7 @@ class Dictionary {
      *        Indicates if starting info is to be printed, e.g. the number of
      *        phrases loaded etc (default = true).
      ********************************************************************************/
-    void TranslateToPrimary(const size_t max_num_phrases = std::numeric_limits<size_t>::max(),
+    void TranslateToPrimary(const std::size_t max_num_phrases = std::numeric_limits<std::size_t>::max(),
                             const bool print_start_info = true);
 
     /********************************************************************************
@@ -203,16 +205,17 @@ class Dictionary {
      *        Reference to vector storing all input arguments entered from the 
      *        terminal when running the program.
      ********************************************************************************/
-    static size_t GetMaxNumPhrasesFromTerminal(const int argc, const char** argv) {
-        return argc >= 3 ? static_cast<size_t>(std::atoi(argv[2])) 
-                         : std::numeric_limits<size_t>::max();
+    static std::size_t GetMaxNumPhrasesFromTerminal(const int argc, const char** argv) {
+        return argc >= 3 ? static_cast<std::size_t>(std::atoi(argv[2])) 
+                         : std::numeric_limits<std::size_t>::max();
     }
 
   private:
     std::vector<std::pair<std::string, std::string>> phrases_{};
-    size_t num_guesses_{};
-    size_t num_errors_{};
-    std::vector<size_t> index_vector_{};
+    std::size_t num_guesses_{};
+    std::size_t num_errors_{};
+    std::size_t max_num_phrases_{std::numeric_limits<std::size_t>::max()};
+    std::vector<std::size_t> index_vector_{};
     bool reverse_{false};
 
     double GetPrecision(void) const {
@@ -223,37 +226,34 @@ class Dictionary {
         return (GetPrecision() - static_cast<int>(GetPrecision()));
     }
 
-    size_t NumCorrectAnswers(void) const {
+    std::size_t NumCorrectAnswers(void) const {
         return num_guesses_ - num_errors_;
     }
 
-    void RunGame(const size_t max_num_phrases = std::numeric_limits<size_t>::max(),
-                 const bool print_start_info = true);
-    void RunRound(std::vector<std::pair<std::string, std::string>>& phrases,
-                 const size_t max_num_phrases = std::numeric_limits<size_t>::max());
-    void RunPhrases(std::vector<std::pair<std::string, std::string>>& phrases,
-                    const size_t max_num_phrases);
+    void RunGame(const bool print_start_info = true);
+    void RunRound(std::vector<std::pair<std::string, std::string>>& phrases);
+    void RunPhrases(std::vector<std::pair<std::string, std::string>>& phrases);
     void RunNextPhrase(const std::pair<std::string, std::string>& phrase,
                        std::vector<std::pair<std::string, std::string>>& incorrect_phrases);
     void CheckGuess(const std::string& guess, 
                     const std::pair<std::string, std::string>& phrase,
                     std::vector<std::pair<std::string, std::string>>& incorrect_phrases);
-    void PrintStartInfo(const size_t max_num_phrases) const;
+    void PrintStartInfo(void) const;
     void PrintCurrentStatus(void) const;
     void PrintResults(void) const;
-    void ResizeIndexVector(const size_t size);
+    void ResizeIndexVector(const std::size_t size);
     void ShuffleIndexVector(void);
-    void InitIndexVector(const size_t size);
+    void InitIndexVector(const std::size_t size);
     void AnalyzeError(const std::string& guess, const std::string& answer);
     void ClearStats(void);
     static bool PerformAnalysis(void);
-    static void InitNumberOfPhrasesToRun(std::vector<std::pair<std::string, std::string>>& phrases,
-                                         const size_t max_num_phrases);
+    void InitNumberOfPhrasesToRun(std::vector<std::pair<std::string, std::string>>& phrases);
     static void RemoveAdditionalPhraseInfo(std::string& s);
     static bool PlayAgainInReverse(void);
-    void GetCopyWithouthDuplicates(Dictionary& copy);
+    void GetCopyWithoutDuplicates(Dictionary& copy);
     bool PhraseExists(const std::pair<std::string, std::string>& searched_phrase);
     bool AddPhrase(const std::pair<std::string, std::string>& new_phrase);
+    static void InitRandomGenerator(void);
 };
 
 } /* namespace languages */

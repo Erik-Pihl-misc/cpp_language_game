@@ -22,7 +22,7 @@
 /********************************************************************************
  * @brief Loads phrases from specified file path (if any) and lets the user
  *        translate from the primary language to the target language.
- *        After finishin the translations, the user is able to translate
+ *        After finishing the translations, the user is able to translate
  *        from the target language to the primary language too before the
  *        program terminates.
  * 

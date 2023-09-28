@@ -178,8 +178,8 @@ inline void ReadLine(std::string& s, const char* space = "") {
  * @return
  *        The number of loaded phrases.
  ********************************************************************************/
-size_t LoadPhrasePairs(const std::string& file_path, 
-                     std::vector<std::pair<std::string, std::string>>& phrases);
+std::size_t LoadPhrasePairs(const std::string& file_path, 
+                            std::vector<std::pair<std::string, std::string>>& phrases);
 
 /********************************************************************************
  * @brief Writes pairs of primary and target language phrases stored to file at 

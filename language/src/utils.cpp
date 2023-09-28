@@ -24,11 +24,11 @@ constexpr bool ValidCharacter(const char c) {
 
 } /* namespace */
 
-size_t LoadPhrasePairs(const std::string& file_path, 
-                     std::vector<std::pair<std::string, std::string>>& phrases) {
+std::size_t LoadPhrasePairs(const std::string& file_path, 
+                            std::vector<std::pair<std::string, std::string>>& phrases) {
     std::vector<std::string> retrieved_data{};
     if (RetrieveFromFile(file_path, retrieved_data) && retrieved_data.size() > 1) {
-        for (size_t i{}; i < retrieved_data.size(); i += 2) {
+        for (std::size_t i{}; i < retrieved_data.size(); i += 2) {
             std::pair<std::string, std::string> pair{retrieved_data[i], retrieved_data[i + 1]};
             phrases.push_back(pair);
         }
