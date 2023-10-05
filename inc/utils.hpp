@@ -24,7 +24,7 @@ namespace {
 inline void InitRandomGenerator(void) {
     static bool init{false};
     if (!init) {
-        std::srand(time(0));
+        std::srand(time(nullptr));
         init = true;
     }
 }

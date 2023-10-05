@@ -14,6 +14,25 @@ const std::pair<std::string, std::string>& Dictionary::GetRandomPhrase(void) con
     return phrases_[utils::GetRandomInt<std::size_t>(NumPhrases())];
 }
 
+void Dictionary::PrintPhrases(const std::size_t num_phrases,
+                              const std::uint16_t print_interval_ms, 
+                              std::ostream& ostream) const {
+    
+    std::size_t num_printed_phrases{};
+    for (const auto& i : phrases_) {
+        if (num_printed_phrases++ >= num_phrases) break;
+        ostream << i.first << "\n";
+        ostream << i.second << "\n\n";
+        std::this_thread::sleep_for(std::chrono::milliseconds(print_interval_ms));
+    }
+}
+
+void Dictionary::PrintPhrases(const int argc, const char** argv, std::ostream& ostream) const {
+    const auto num_phrases{GetMaxNumPhrasesFromTerminal(argc, argv)};
+    const auto print_interval_ms{argc >= 4 ? static_cast<std::size_t>(std::atoi(argv[3])) : 2000};
+    PrintPhrases(num_phrases, print_interval_ms, ostream);
+}
+
 bool Dictionary::Load(const std::string& file_path, const bool print_success) { 
     if (utils::LoadPhrasePairs(file_path, phrases_) == 0) {
         std::cerr << "File \"" << file_path << "\" wasn't found or contains insufficient data!\n\n";

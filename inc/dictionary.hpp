@@ -5,6 +5,8 @@
 
 #include <utils.hpp>
 #include <limits>
+#include <thread>
+#include <chrono>
 #include <ctime>
 
 namespace languages {
@@ -125,6 +127,44 @@ class Dictionary {
      *        Reference to a pair containing a random phrase in two languages.
      ********************************************************************************/
     const std::pair<std::string, std::string>& GetRandomPhrase(void) const;
+
+    /********************************************************************************
+     * @brief Prints selected number of phrases with specified print interval.
+     *        As default, the content is printed in the terminal.
+     * 
+     * @param num_phrases
+     *        The number of phrases to print (default = all).
+     * @param print_interval_ms
+     *        The print interval in milliseconds (default = 2000 ms).
+     * @param ostream
+     *        Reference to the output stream (default = stdout).
+     ********************************************************************************/
+    void PrintPhrases(const std::size_t num_phrases = std::numeric_limits<std::size_t>::max(), 
+                      const std::uint16_t print_interval_ms = 2000, 
+                      std::ostream& ostream = std::cout) const;
+
+     /********************************************************************************
+     * @brief Prints selected number of phrases with specified print interval.
+     *        As default, all the phrases are printed with an interval of 2000 ms.
+     * 
+     * @note  The number of phrases to print and the print interval must be entered 
+     *        after the file path when running the program, for instance
+     * 
+     *        ./print_phrases file.txt 10 1000
+     * 
+     *        to print ten phrases loaded from file path "file.txt" with a print
+     *        interval of 1000 ms when running the program "print_phrases".
+     * 
+     * @param argc
+     *        The number of input arguments entered from the terminal when
+     *        running the program.
+     * @param argv
+     *        Reference to vector storing all input arguments entered from the 
+     *        terminal when running the program.
+     * @param ostream
+     *        Reference to the output stream (default = stdout).
+     ********************************************************************************/
+    void PrintPhrases(const int argc, const char** argv, std::ostream& ostream = std::cout) const;
 
     /********************************************************************************
      * @brief Runs the game with translation from the primary language to the 
