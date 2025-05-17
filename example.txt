@@ -1,0 +1,11 @@
+Welcome to my C++ language game.
+Willkommen zu meinem C++ Sprachspiel.
+
+I hope it will be a great aid to you.
+Ich hoffe, es wird dir eine grosse Hilfe sein.
+
+Please enter your answer.
+Bitte gib deine Antwort ein.
+
+Good luck and have fun!
+Viel Glück und viel Spass!
