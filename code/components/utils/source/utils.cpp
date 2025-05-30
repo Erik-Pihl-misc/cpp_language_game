@@ -44,6 +44,13 @@ void readLine(std::string& str, const char* space)
 }
 
 // ---------------------------------------------------------------------------
+bool fileExists(const std::string& filePath)
+{
+    std::ifstream ifstream{filePath};
+    return ifstream.is_open();
+}
+
+// ---------------------------------------------------------------------------
 std::size_t loadPhrasesFromFile(const std::string& filePath, std::list<Phrase>& phrases)
 {
     std::vector<std::string> data{};
@@ -62,6 +69,15 @@ std::size_t loadPhrasesFromFile(const std::string& filePath, std::list<Phrase>& 
 }
 
 // ---------------------------------------------------------------------------
+std::size_t loadPhrasesFromFile(const std::string& filePath, std::vector<Phrase>& phrases)
+{
+    std::list<Phrase> phraseList{};
+    const auto phraseCount{loadPhrasesFromFile(filePath, phraseList)};
+    phrases.assign(phraseList.begin(), phraseList.end());
+    return phraseCount;
+}
+
+// ---------------------------------------------------------------------------
 bool writePhrasesToFile(const std::string& filePath, const std::list<Phrase>& phrases)
 {
     // Open the file for writing.
@@ -77,6 +93,13 @@ bool writePhrasesToFile(const std::string& filePath, const std::list<Phrase>& ph
     }
     // Return true to indicate successful operation.
     return true;
+}
+
+// ---------------------------------------------------------------------------
+bool writePhrasesToFile(const std::string& filePath, const std::vector<Phrase>& phrases)
+{
+    const std::list<Phrase> phraseList{phrases.begin(), phrases.end()};
+    return writePhrasesToFile(filePath, phraseList);
 }
 
 // ---------------------------------------------------------------------------

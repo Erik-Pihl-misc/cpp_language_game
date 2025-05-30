@@ -49,6 +49,11 @@ This will load up to 10 phrase pairs from the file and start the translation gam
 
 Potential duplicates in the file will be removed when the file is read.
 
+Incorrectly guessed phrases will be stored in files named `errors<N>.txt`, where `N` is a sequential number.\
+For example, the first file will be `errors1.txt`, the second will be `errors2.txt`, and so on.  
+
+The sequential number is only incremented if a file with the current number already exists, ensuring that each new set of errors is saved to a new file without overwriting previous ones.
+
 ## Print phrases
 
 To print phrases from a file, please use the `PhrasePrinter` command-line utility found [here](./utils/README.md).

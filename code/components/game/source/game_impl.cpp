@@ -3,6 +3,7 @@
  */
 #include <iomanip>
 #include <iostream>
+#include <sstream>
 #include <string>
 #include <vector>
 
@@ -22,6 +23,7 @@ bool performAnalysis();
 void removeAdditionalPhraseInfo(std::string& str);
 bool playAgainInReverse();
 bool response();
+const std::string errorFilePath();
 } // namespace
 
 // ---------------------------------------------------------------------------
@@ -31,6 +33,7 @@ GameImpl::GameImpl(dictionary::AdapterInterface &dictionaryAdapter)
     , myErrorCount{}
     , myPhraseIndexes{}
     , myReverse{false}
+    , myErrorsWrittenToFile{false}
 {}   
 
 // ---------------------------------------------------------------------------
@@ -39,7 +42,8 @@ bool GameImpl::play(const bool reverse)
     // Return false if no phrases are present.
     if (myDictionary.empty()) { return false; }
 
-    myReverse = reverse;
+    myReverse             = reverse;
+    myErrorsWrittenToFile = false;
 
     std::vector<Phrase> remainingPhrases{phrases()};
     preparePhrasesForSession(remainingPhrases);
@@ -89,6 +93,8 @@ void GameImpl::runRemainingPhrases(std::vector<Phrase>& phrases)
         runNextPhrase(phrases[i], incorrectPhrases);
         if (correctAnswerCount() >= phraseCountForSession()) { return; }
     }
+
+    writeErrorsToFile(incorrectPhrases);
     phrases = incorrectPhrases;
 }
 
@@ -255,6 +261,28 @@ std::size_t GameImpl::correctAnswerCount() const noexcept { return myGuessCount 
 // ---------------------------------------------------------------------------
 std::size_t GameImpl::phraseCountForSession() const { return myDictionary.phraseCountToUse(); }
 
+// ---------------------------------------------------------------------------
+void GameImpl::writeErrorsToFile(const std::vector<Phrase>& errors)
+{
+    if (!errors.empty() && !myErrorsWrittenToFile)
+    {
+        const std::string errorPath{errorFilePath()};
+        utils::writePhrasesToFile(errorPath, errors);   
+        myErrorsWrittenToFile = true;
+
+        if (1U == errors.size())
+        {
+            std::cout << "One incorrectly guessed phrase "
+                "has been written to file \"" << errorPath << "\"!\n\n";
+        }
+        else
+        {
+            std::cout << errors.size() << " incorrectly guessed phrases "
+                "have been written to file \"" << errorPath << "\"!\n\n";
+        }
+    }
+}
+
 namespace
 {
 // ---------------------------------------------------------------------------
@@ -297,6 +325,22 @@ bool response()
         else if (s[0U] == 'N' || s[0U] == 'n') { return false; }
         else { std::cout << "Invalid input, try again!\n"; }
     }
+}
+
+// ---------------------------------------------------------------------------
+const std::string errorFilePath()
+{
+    constexpr const char* errorRoot{"errors"};
+    constexpr const char* format{".txt"};
+    constexpr const char* defaultPath{"errors1.txt"};
+
+    for (std::size_t fileId{1U}; 0U != fileId; ++fileId)
+    {
+        std::stringstream filePath{};
+        filePath << errorRoot << fileId << format;
+        if (!utils::fileExists(filePath.str())) { return filePath.str(); }
+    }
+    return defaultPath;
 }
 } // namespace
 } // namespace game

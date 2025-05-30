@@ -71,8 +71,7 @@ private:
     std::size_t correctAnswerCount() const noexcept;
     void preparePhrasesForSession(std::vector<Phrase>& phrases);
     std::size_t phraseCountForSession() const;
-
-    static constexpr std::size_t kMaxPhraseCount{std::numeric_limits<std::size_t>::max()};
+    void writeErrorsToFile(const std::vector<Phrase>& errors);
 
     /** Dictionary implementation. */
     dictionary::Dictionary myDictionary;
@@ -88,6 +87,9 @@ private:
 
     /** Indicate whether to play the game in reverse. */
     bool myReverse;
+
+    /** Indicate whether incorrectly guesses phrases have been written to the error file. */
+    bool myErrorsWrittenToFile;
 };
 } // namespace game
 } // namespace language

@@ -160,6 +160,7 @@ bool numberFoundInVector(T searchedNumber, const std::vector<T>& numbers) noexce
     return false;
 }
 } // namespace
+
 /**
  * @brief Read a line from the terminal and store it in the referenced string.
  *
@@ -170,13 +171,40 @@ bool numberFoundInVector(T searchedNumber, const std::vector<T>& numbers) noexce
 void readLine(std::string& str, const char* space = "");
 
 /**
- * @brief Load phrases in primary and target language from file and store them in given vector.
+ * @brief Check if file exists.
+ * 
+ * @param[in] filePath Path to the file.
+ * 
+ * @return True if the file exists, otherwise false.
+ */
+bool fileExists(const std::string& filePath);
+
+/**
+ * @brief Load phrases in primary and target language from file and store them in given list.
  *
- * @param[in] filePath Path to file containing phrase pairs to load the vector with.
- * @param[out] phrases Reference to vector storing the loaded phrase pairs.
+ * @param[in] filePath Path to file containing phrase pairs to load the list with.
+ * @param[out] phrases Reference to list storing the loaded phrase pairs.
  * @return Number of loaded phrases.
  */
 std::size_t loadPhrasesFromFile(const std::string& filePath, std::list<Phrase>& phrases);
+
+/**
+ * @brief Load phrases in primary and target language from file and store them in given vector.
+ *
+ * @param[in] filePath Path to file containing phrase pairs to load the list with.
+ * @param[out] phrases Reference to vector storing the loaded phrase pairs.
+ * @return Number of loaded phrases.
+ */
+std::size_t loadPhrasesFromFile(const std::string& filePath, std::vector<Phrase>& phrases);
+
+/**
+ * @brief Write phrases in primary and target language to a file.
+ *
+ * @param[in] filePath Path to the file where phrase pairs will be written.
+ * @param[in] phrases List containing the phrases to write to the file.
+ * @return True if writing was successful, false otherwise.
+ */
+bool writePhrasesToFile(const std::string& filePath, const std::list<Phrase>& phrases);
 
 /**
  * @brief Write phrases in primary and target language to a file.
@@ -185,7 +213,7 @@ std::size_t loadPhrasesFromFile(const std::string& filePath, std::list<Phrase>& 
  * @param[in] phrases Vector containing the phrases to write to the file.
  * @return True if writing was successful, false otherwise.
  */
-bool writePhrasesToFile(const std::string& filePath, const std::list<Phrase>& phrases);
+bool writePhrasesToFile(const std::string& filePath, const std::vector<Phrase>& phrases);
 
 /**
  * @brief Retrieve non-empty lines from a file and store them in a vector.
