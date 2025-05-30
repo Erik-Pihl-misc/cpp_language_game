@@ -27,3 +27,5 @@ target_sources(${PROJECT_NAME}
 
   # Link libraries.
 target_link_libraries(${PROJECT_NAME} PUBLIC Language::Utils)
+
+add_subdirectory(test)

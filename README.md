@@ -10,9 +10,20 @@ In a Linux environment, install necessary libraries, such as the `GCC` compiler 
 
 ```bash
 sudo apt -y update
-sudo apt -y install build-essential cmake
+sudo apt -y install build-essential cmake libgtest-dev
 ```
-Then build the game and place all build files in a directory called `build`:
+
+Build necessary files to use `Google Test`:
+
+```bash
+cd /usr/src/gtest
+sudo cmake CMakeLists.txt
+sudo make
+cd lib
+sudo cp *.a /usr/lib
+```
+
+Then return to this repository, build the game and place all build files in a directory called `build`:
 
 ```bash
 cmake -S . -B build
@@ -54,3 +65,14 @@ In this command:
 * `500` is the interval in milliseconds between each printed pair.
 
 If you do not specify a number or interval, all phrase pairs are printed with a default interval of 2000 ms.
+
+## Run unit tests
+
+Unit tests are located in the `test` subdirectory and are built when you build the project with CMake.
+
+For example, to run unit tests for the `DictionaryAdapter` component, use the following commands:
+
+```bash
+cd test
+./DictionaryTest
+```
