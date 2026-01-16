@@ -1,0 +1,29 @@
+Fetch content from remote branch `main` to your local repository.
+git fetch origin main
+
+Set your local branch in sync with the last fetched branch (overwriting local changes).
+git reset --hard FETCH_HEAD
+
+Synchronize remote branch `main` with your local branch.
+git fetch origin main; git reset --hard FETCH_HEAD; git clean -fd
+
+Merge current branch `test-branch` into the local `main` branch.
+git checkout test-branch; git merge main
+
+Merge current branch `test-branch` into the remote `main` branch.
+git checkout test-branch; git merge origin/main
+
+Rebase current branch on top of remote branch `main`.
+git fetch origin main; git rebase origin/main
+
+Rebase current branch on top of remote branch `main` without deleting local changes.
+git stash; git fetch origin main; git rebase origin/main; git stash pop; git add .; git commit
+
+Add new remote at `git@github.com.JohnDoe/example-repo.git`.
+git remote add origin git@github.com.JohnDoe/example-repo.git
+
+Change remote to `git@github.com.ElvisPresley/the-kings-repo.git`.
+git remote set-url origin git@github.com.ElvisPresley/the-kings-repo.git
+
+View the remote URL.
+git remote show origin

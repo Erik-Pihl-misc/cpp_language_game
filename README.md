@@ -6,6 +6,8 @@ This is a command-line language game designed to help users practice translation
 
 ## Setup
 
+### Prerequisites
+
 In a Linux environment, install necessary libraries, such as the `GCC` compiler and `CMake`:
 
 ```bash
@@ -22,6 +24,8 @@ sudo make
 cd lib
 sudo cp *.a /usr/lib
 ```
+
+### Build the game
 
 Then return to this repository, build the game and place all build files in a directory called `build`:
 
@@ -53,6 +57,12 @@ Incorrectly guessed phrases will be stored in files named `errors<N>.txt`, where
 For example, the first file will be `errors1.txt`, the second will be `errors2.txt`, and so on.  
 
 The sequential number is only incremented if a file with the current number already exists, ensuring that each new set of errors is saved to a new file without overwriting previous ones.
+
+To play a game using Git commands, load the [git.txt](./git.txt) file:
+
+```bash
+./LanguageGame git.txt
+```
 
 ## Print phrases
 
